@@ -26,6 +26,9 @@ circular_buffer circularBuffer_construct(unsigned long length)
 void circularBuffer_collect(circular_buffer self)
 {
     //TO COMPLETE...
+    free(self->tail);
+    free(self);
+
 }
 
 void circularBuffer_append_char_at_head(circular_buffer self, char c)
@@ -52,11 +55,29 @@ char circularBuffer_get_char_before_current(circular_buffer self)
     //sinon, si buffer est plein, je positionne curseur curent sur le dernier caractère du buffer
     //sinon, si curseur head se trouve après curseur tail, je positionne curseur current la position qui précéde head
     //sinon, buffer est vide , je retourne '\0';
+{
+	if( self->current > self->tail)
 
-    return *(self->current);
+		self->current--;
+
+	else if (self->isFull)
+
+        	self->current =self->tail + self->length - 1 ;
+
+	else if (self->head >self->tail)
+
+        	self->current = self->head -1;
+
+	else
+
+		return('\0');
+
+
+	return *(self->current);
 }
 
 unsigned long circularBuffer_get_buffer_length(circular_buffer self)
 {
     //TO COMPLETE
+	return(self->length);
 }
